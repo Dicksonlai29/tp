@@ -24,7 +24,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private Remark remark;
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
