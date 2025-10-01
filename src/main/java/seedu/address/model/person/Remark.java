@@ -5,7 +5,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Remark {
 
@@ -16,11 +15,11 @@ public class Remark {
     /**
      * Constructs an {@code Address}.
      *
-     * @param address A valid address.
+     * @param remark A valid address.
      */
-    public Remark(String address) {
-        requireNonNull(address);
-        value = address;
+    public Remark(String remark) {
+        requireNonNull(remark);
+        value = remark;
     }
 
 
