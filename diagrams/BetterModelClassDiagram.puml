@@ -1,0 +1,33 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+abstract class Person
+
+
+AddressBook *-right-> "1" UniquePersonList
+AddressBook *-right-> "1" UniqueTagList
+UniqueTagList -[hidden]down- UniquePersonList
+UniqueTagList -[hidden]down- UniquePersonList
+
+UniqueTagList -right-> "*" Tag
+UniquePersonList -right-> Person
+
+Student -left-> Person
+Student *--> Address
+Student *--> PaymentList
+
+Student -up-> "*" Tag
+
+Person *--> Name
+Person *--> Phone
+Person *--> Email
+
+
+PaymentList *--> "*" Payment
+Payment *--> YearMonth
+Payment *--> Total
+Payment *--> Status
+@enduml
