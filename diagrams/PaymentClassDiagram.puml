@@ -1,0 +1,14 @@
+
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+PaymentList *--> Payment
+PaymentList *--> PaymentStatus
+Payment *--> TotalAmount
+Payment *--> UnpaidAmount
+Payment *--> YearMonth
+Payment *--> PaidAmount
+@enduml

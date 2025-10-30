@@ -1,0 +1,16 @@
+
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+LessonList *--> Lesson
+Lesson *--> Student
+Lesson *--> Subject
+Lesson *--> Level
+Lesson *--> Day
+Lesson *--> LessonTime
+Lesson *--> Rate
+Lesson *--> Address
+@enduml
