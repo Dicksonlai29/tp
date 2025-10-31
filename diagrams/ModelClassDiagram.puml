@@ -11,28 +11,14 @@ Class "<<interface>>\nModel" as Model
 Class AddressBook
 Class ModelManager
 Class UserPrefs
-
-Class UniquePersonList
-Class Person
-Class Address
-Class Email
-Class Name
-Class Phone
-Class Tag
-Class LessonList
 Class PaymentList
 
-Class Payment
-Class YearMonth
-Class TotalAmount
-Enum Status
+Class UniquePersonList
+Class Student
+Class LessonList
+
 
 Class Lesson
-Class Day
-Class LessonTime
-Enum Level
-Class Rate
-Enum Subject
 Class UniqueLessonList
 
 Class I #FFFFFF
@@ -52,34 +38,20 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 AddressBook *--> "1" UniqueLessonList
-UniquePersonList --> "~* all" Person
+UniquePersonList --> "~* all" Student
 UniqueLessonList --> "~* all" Lesson
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
-Person *--> "*" LessonList
 
-Person -[hidden]up--> I
+Student *--> "1" LessonList
+Student *--> "1" PaymentList
+
+Student -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
 
-PaymentList *--> "*" Payment
-Payment *--> YearMonth
-Payment *--> Total
-Payment *--> Status
 
 LessonList *--> "*" Lesson
-Lesson *--> Day
-Lesson *--> LessonTime
-Lesson *--> Level
-Lesson *--> Rate
-Lesson *--> Subject
 
-ModelManager --> "~* filtered" Person
+ModelManager --> "~* filtered" Student
 @enduml
+
 

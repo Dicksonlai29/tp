@@ -5,10 +5,15 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
-PaymentList *--> Payment
-PaymentList *--> PaymentStatus
-Payment *--> TotalAmount
-Payment *--> UnpaidAmount
-Payment *--> YearMonth
-Payment *--> PaidAmount
+enum PaymentStatus
+class Payment
+class TotalAmount
+class YearMonth
+class UnpaidAmount
+
+PaymentList *-->"*" Payment
+PaymentList *-->"1" PaymentStatus
+Payment *-->"1" TotalAmount
+Payment *-->"1" UnpaidAmount
+Payment *-->"1" YearMonth
 @enduml
