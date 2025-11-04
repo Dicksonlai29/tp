@@ -1,0 +1,52 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+actor Tutor
+box Student STUDENT_COLOR_T1
+participant ":Student" as Student STUDENT_COLOR
+end box
+box Payment PAYMENT_COLOR_T1
+participant ":PaymentList" as PaymentList PAYMENT_COLOR
+participant "p:Payment" as Payment PAYMENT_COLOR
+participant "u:UnpaidAmount" as u PAYMENT_COLOR
+end box
+
+Tutor -> Student : "pay 1"
+activate Student
+
+Student -> PaymentList : markAllPaid()
+activate PaymentList
+
+
+PaymentList -> PaymentList: findUnpaids()
+activate PaymentList
+PaymentList --> PaymentList: unpaidList
+deactivate PaymentList
+
+alt if unpaidList is not empty
+  loop for each p in unpaidList
+    PaymentList -> Payment: p.markPaid()
+    activate Payment
+    create u
+    Payment -> u: new UnpaidAmount(0)
+    activate u
+    u -[hidden]-> Payment
+    destroy u
+    deactivate Payment
+  end
+  PaymentList -> PaymentList: setPaymentStatus(PAID)
+  activate PaymentList
+  deactivate PaymentList
+else isEmpty()
+  PaymentList --> Tutor: "All lessons paid for already."
+end
+PaymentList --> Student
+deactivate PaymentList
+
+Student -> Student: setPaymentStatus(PAID)
+activate Student
+deactivate Student
+
+deactivate Student
+@enduml

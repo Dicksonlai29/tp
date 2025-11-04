@@ -1,0 +1,65 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor User as user USER_COLOR
+Participant ":MainApp" as MainApp UI_COLOR
+Participant ":StartupRolloverHandler" as StartupRolloverHandler LOGIC_COLOR
+Participant ":UserPrefs" as userpref USERPREF_COLOR
+Participant ":MonthlyRollover" as monthlyrollover MONTHLYROLLOVER_COLOR
+Participant ":Model" as model MODEL_COLOR
+Participant ":Storage" as storage STORAGE_COLOR
+
+user -[USER_COLOR]> MainApp : Open App
+activate MainApp UI_COLOR
+
+create StartupRolloverHandler
+MainApp -[UI_COLOR]> StartupRolloverHandler : StartupRolloverHandler(Model, Storage)
+activate StartupRolloverHandler LOGIC_COLOR
+StartupRolloverHandler -[LOGIC_COLOR]-> MainApp
+deactivate StartupRolloverHandler
+
+MainApp -[UI_COLOR]> StartupRolloverHandler : perform(UserPrefs)
+activate StartupRolloverHandler LOGIC_COLOR
+
+StartupRolloverHandler -[LOGIC_COLOR]> userpref : getLastOpened()
+activate userpref USERPREF_COLOR
+userpref -[USERPREF_COLOR]-> StartupRolloverHandler
+
+StartupRolloverHandler -[LOGIC_COLOR]> userpref : setLastOpened(YearMonth)
+deactivate userpref
+
+create monthlyrollover
+StartupRolloverHandler -[LOGIC_COLOR]> monthlyrollover : MonthlyRollover(Model)
+activate monthlyrollover MONTHLYROLLOVER_COLOR
+monthlyrollover -[MONTHLYROLLOVER_COLOR]-> StartupRolloverHandler
+deactivate monthlyrollover
+
+StartupRolloverHandler -[LOGIC_COLOR]> monthlyrollover : compute(YearMonth, YearMonth)
+activate monthlyrollover MONTHLYROLLOVER_COLOR
+deactivate
+
+
+StartupRolloverHandler -[LOGIC_COLOR]> model :setUserPref(UserPrefs)
+activate model MODEL_COLOR
+
+model -[MODEL_COLOR]-> StartupRolloverHandler
+deactivate model
+
+StartupRolloverHandler -[LOGIC_COLOR]> storage : saveAddressBook(AddressBook)
+activate storage STORAGE_COLOR
+
+storage -[STORAGE_COLOR]> storage : Save to file
+activate storage STORAGE_COLOR_T1
+storage --[STORAGE_COLOR]> storage
+deactivate storage
+
+storage --[STORAGE_COLOR]> StartupRolloverHandler
+deactivate storage
+
+StartupRolloverHandler --[LOGIC_COLOR]> MainApp
+deactivate StartupRolloverHandler
+
+MainApp--[UI_COLOR]> user
+deactivate MainApp
+@enduml

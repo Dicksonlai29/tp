@@ -5,6 +5,9 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
+class "<<enumeration>>\nSubject" as Subject
+class "<<enumeration>>\nLevel" as Level
+
 LessonList *-->"*" Lesson
 Lesson *-->"1" Student
 Lesson *-->"1" Subject
